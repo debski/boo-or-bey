@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            text-align: center;
+            padding: 10vh 25vw;
+            background: #222222;
+        }
+
+        h1 {
+            color: white;
+            font-family: Arial, Helvetica;
+            font-size: 10vw;
+            height: 20vh;
+        }
+
+        input[type=range] {
+            width: 100%;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+            background: transparent; /* Otherwise white in Chrome */
+        }
+
+            input[type=range]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                border: 2.9px solid #ccccee;
+                height: 34px;
+                width: 34px;
+                border-radius: 28px;
+                background: #ffffff;
+                cursor: pointer;
+                margin-top: -16px;
+            }
+
+            input[type=range]::-webkit-slider-runnable-track {
+                width: 100%;
+                height: 2px;
+                cursor: pointer;
+                border-radius: 25px;
+                border: 2.3px solid #dddddd;
+                background: #fefefe;
+            }
+
+            input[type=range]:focus::-webkit-slider-runnable-track {
+                background: #fefefe;
+            }
+
+            input[type=range]:focus {
+                outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+            }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded",
+            function () {
+
+                var slider = document.getElementById('slider');
+                var output = document.getElementById('output');
+
+                slider.addEventListener('input',
+                    function () {
+                        var red = 34;
+                        var green = 34;
+                        var blue = 34;
+
+                        var number = parseInt(slider.value);
+                        console.log(number);
+
+                        if (number < 0) {
+                            red += Math.abs(number);
+                        } else if (number > 0) {
+                            green += number / 2;
+                        }
+
+                        document.body.style.backgroundColor = 'rgb(' + red + ',' + green + ',' + blue + ')';
+
+                        var outputText;
+                        switch (slider.value) {
+                            case "-100":
+                                outputText = String.fromCodePoint(0x1F480);
+                                break;
+                            case "0":
+                                outputText = "¯\\_(ツ)_/¯";
+                                break;
+                            case "100":
+                                var code = Math.floor(Math.random() * (0x1F4B2 - 0x1F300)) + 0x1F300;
+                                outputText = String.fromCodePoint(code);
+                                break;
+                            default:
+                                outputText = slider.value + ' %';
+                        }
+                        output.innerHTML = outputText;
+                    });
+            });
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1; user-scalable=no">
+    <title></title>
+</head>
+<body>
+    <h1 id="output">¯\_(ツ)_/¯</h1>
+    <input type="range" id="slider" min="-100" max="100" />
+</body>
+</html>
